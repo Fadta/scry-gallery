@@ -11,13 +11,15 @@ class Gallery(ctk.CTkScrollableFrame):
         self._rowLength = rowLength
         self._imgWidth = imgWidth
         self._imgHeight = imgHeight
-        self._callbacks: List[Callable] = []
+        self._clickCallbacks: List[Callable] = []
+        self._hoverCallbacks: List[Callable] = []
         
         self._lastUsedColumn = 0
         self._lastUsedRow = 0
 
         self._images: List[Tuple[Image.Image, str]] = []
         self._selectedIndex = 0
+        self._hoveredImageIndex = 0
 
 
     def _updateSelectedIndex(self, newIx: int) -> None:
@@ -26,7 +28,17 @@ class Gallery(ctk.CTkScrollableFrame):
 
     def _imgClicked(self, clickedImgIndex: int) -> None:
         self._updateSelectedIndex(clickedImgIndex)
-        for callback in self._callbacks:
+        for callback in self._clickCallbacks:
+            callback()
+
+
+    def _updateHoveredImage(self, newIx: int) -> None:
+        self._hoveredImageIndex = newIx
+
+
+    def _imgHovered(self, hoveredImgIx: int) ->  None:
+        self._updateHoveredImage(hoveredImgIx)
+        for callback in self._hoverCallbacks:
             callback()
 
 
@@ -49,11 +61,31 @@ class Gallery(ctk.CTkScrollableFrame):
         Args:
             callback: Callable object with zero parameters to be called
         """
-        self._callbacks.append(callback)
+        self._clickCallbacks.append(callback)
+
+
+    def onImageHover(self, callback: Callable) -> None:
+        self._hoverCallbacks.append(callback)
+
+
+    def getSelectedImage(self):
+        return self.getImage(self.getSelectedIndex())
 
 
     def getSelectedIndex(self) -> int:
         return self._selectedIndex
+
+
+    def getHoveredIndex(self) -> int:
+        return self._hoveredImageIndex
+
+
+    def getHoveredImage(self) -> Image.Image:
+        return self._images[self.getHoveredIndex()][0]
+
+
+    def getHoveredId(self) -> str:
+        return self._images[self.getHoveredIndex()][1]
 
 
     def getImage(self, ix: int) -> Image.Image | None:
@@ -91,6 +123,7 @@ class Gallery(ctk.CTkScrollableFrame):
                 image=ctkImage,
                 command=lambda: self._imgClicked(lastIndex)
         )
+        imgButton.bind("<Enter>", lambda e, m=lastIndex: self._imgHovered(m))
 
         imageIdTuple = (img, id)
         self._images.append(imageIdTuple)
