@@ -12,9 +12,13 @@ class ImageDisplay(ctk.CTkLabel):
         self.configure(image=self.placeholder, text='')
 
     
-    def show(self, image: Image.Image):
-        ctkImage = ctk.CTkImage(image, size=(self.width, self.height))
-        self.configure(image=ctkImage)
+    def show(self, image: Image.Image | None):
+        if image is None:
+            self.resetDisplay()
+
+        else:
+            ctkImage = ctk.CTkImage(image, size=(self.width, self.height))
+            self.configure(image=ctkImage)
 
 
     def resetDisplay(self):
