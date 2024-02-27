@@ -1,4 +1,3 @@
-from tkinter import mainloop
 from typing import Any
 from PIL import Image
 import customtkinter as ctk
