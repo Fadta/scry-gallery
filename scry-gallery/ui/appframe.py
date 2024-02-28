@@ -1,3 +1,5 @@
+from collections.abc import Callable
+from typing import Tuple
 import customtkinter as ctk
 from PIL import Image
 from ui.gallery import Gallery
@@ -66,7 +68,24 @@ class AppFrame(ctk.CTkFrame):
 
     def setStatus(self, status: str) -> None:
         self.statusLbl.configure(text=status)
+
+
+    def getClickedCard(self) -> Tuple[Image.Image, str]:
+        selectedIx = self.cardGallery.getSelectedIndex()
+        return (self.cardGallery.getImage(selectedIx), self.cardGallery.getId(selectedIx))
+
+
+    def getClickedArtist(self) -> str:
+        return self.cardGallery.getSelectedId()
+
+
+    def onArtClick(self, callback: Callable):
+        self.artGallery.onImageClicked(callback)
         
+    
+    def onCardClick(self, callback: Callable):
+        self.cardGallery.onImageClicked(callback)
+
 
     def addArt(self, img: Image.Image, artistName: str) -> None:
         self.artGallery.addImage(img, artistName)
