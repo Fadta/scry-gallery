@@ -76,7 +76,7 @@ class AppFrame(ctk.CTkFrame):
 
 
     def getClickedArtist(self) -> str:
-        return self.cardGallery.getSelectedId()
+        return self.artGallery.getSelectedId()
 
 
     def onArtClick(self, callback: Callable):
