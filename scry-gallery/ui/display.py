@@ -11,7 +11,7 @@ class ImageDisplay(ctk.CTkLabel):
         self.placeholder = ctk.CTkImage(placeholder, size=(self.width, self.height))
         self.configure(image=self.placeholder, text='')
 
-    
+
     def show(self, image: Image.Image | None):
         if image is None:
             self.resetDisplay()
@@ -23,23 +23,3 @@ class ImageDisplay(ctk.CTkLabel):
 
     def resetDisplay(self):
         self.configure(image=self.placeholder)
-
-
-if __name__ == "__main__":
-    root = ctk.CTk()
-    root.geometry("1600x900")
-
-    
-    #img
-    voloImg = Image.open("./resources/clb-103-volo-itinerant-scholar.png")
-    plowsharesImg = Image.open("./resources/mkc-88-swords-to-plowshares.png")
-
-    imgdisplay = ImageDisplay(master=root, placeholder=voloImg, height= 560, width=400)
-    updateBtn = ctk.CTkButton(master=root, text='update', command=lambda: imgdisplay.show(plowsharesImg))
-    resetBtn = ctk.CTkButton(master=root, text='reset', command=imgdisplay.resetDisplay)
-
-    imgdisplay.pack()
-    updateBtn.pack()
-    resetBtn.pack()
-
-    root.mainloop()

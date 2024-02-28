@@ -140,34 +140,3 @@ class Gallery(ctk.CTkScrollableFrame):
 
         self._lastUsedColumn = 0
         self._lastUsedRow = 0
-
-
-if __name__ == "__main__":
-    # window
-    root = ctk.CTk()
-    root.geometry("1600x900")
-    root.title("Gallery test")
-
-    # Images
-    cardImg = Image.open("./resources/mkc-88-swords-to-plowshares.png")
-
-    # add Gallery
-    gallery = Gallery(root, rowLength=5, imgWidth=100, imgHeight=140)
-    gallery.pack(fill='both', expand=True)
-
-    # add images
-    gallery.addImage(cardImg, "swords to plowshares")
-    gallery.addImage(cardImg, "otra")
-    gallery.addImage(cardImg, "XD")
-    gallery.addImage(cardImg)
-    gallery.addImage(cardImg)
-    gallery.addImage(cardImg)
-    gallery.addImage(cardImg)
-    gallery.addImage(cardImg)
-    gallery.addImage(cardImg)
-    gallery.addImage(cardImg)
-
-    gallery.onImageClicked(lambda: print(gallery.getId(gallery.getSelectedIndex())))
-
-    # loop
-    root.mainloop()
