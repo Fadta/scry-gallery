@@ -97,7 +97,9 @@ class AppFrame(ctk.CTkFrame):
 
     def clearCard(self) -> None:
         self.cardGallery.clear()
+        self.cardDisplay.resetDisplay()
 
 
     def clearArt(self) -> None:
         self.artGallery.clear()
+        self.artDisplay.resetDisplay()
