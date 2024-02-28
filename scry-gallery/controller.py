@@ -54,6 +54,8 @@ class Controller:
             img = self._resourceManager.requestImage(card.getImgUri(ImageType.ART_CROP))
             self._app.addArt(img, card.artist)
             self._resourceManager.dutySleep()
+        self._app.setStatus(f"Loaded Arts for {cards[0].cardname}")
+        self._app.update()
 
 
     def _loadCardGallery(self, cards: List[Card], artist: str) -> None:
@@ -63,6 +65,8 @@ class Controller:
             img = self._resourceManager.requestImage(card.getImgUri(ImageType.PNG))
             self._app.addCard(img, card.getId())
             self._resourceManager.dutySleep()
+        self._app.setStatus(f"Loaded {cards[0].cardname} by {artist}")
+        self._app.update()
 
 
     def extractName(self, inStr: str) -> str:

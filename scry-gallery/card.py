@@ -26,7 +26,6 @@ class Card:
         return self.imgs_uri[img.value]
         
 
-
     @staticmethod
     def dict2card(data: dict) -> Card:
         keys = data.keys()
