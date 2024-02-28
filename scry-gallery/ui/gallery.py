@@ -72,6 +72,10 @@ class Gallery(ctk.CTkScrollableFrame):
         return self.getImage(self.getSelectedIndex())
 
 
+    def getSelectedId(self):
+        return self.getId(self.getSelectedIndex())
+
+
     def getSelectedIndex(self) -> int:
         return self._selectedIndex
 
@@ -88,18 +92,18 @@ class Gallery(ctk.CTkScrollableFrame):
         return self._images[self.getHoveredIndex()][1]
 
 
-    def getImage(self, ix: int) -> Image.Image | None:
+    def getImage(self, ix: int) -> Image.Image:
         if ix>=0 and ix<len(self._images):
             return self._images[ix][0]
         else:
-            return None
+            raise Exception(f"Gallery: Tried to retrieve Image of item: {ix} with a gallery length of {len(self._images)}")
 
 
-    def getId(self, ix: int) -> str | None:
+    def getId(self, ix: int) -> str:
         if ix>=0 and ix<len(self._images):
             return self._images[ix][1]
         else:
-            return None
+            raise Exception(f"Gallery: Tried to retrieve ID of item: {ix} with a gallery length of {len(self._images)}")
 
         
     def addImage(self, img: Image.Image, id: str='auto') -> None:
