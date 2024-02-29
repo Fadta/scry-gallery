@@ -11,9 +11,10 @@ class ImageType(Enum):
 
 
 class Card:
-    def __init__(self, cardname: str, artist: str, cardSet: str, imgs_uri: dict) -> None:
+    def __init__(self, cardname: str, artist: str, cardSet: str, artId: str, imgs_uri: dict) -> None:
         self.cardname = cardname
         self.artist = artist
+        self.artId = artId
         self.cardSet = cardSet
         self.imgs_uri = imgs_uri
 
@@ -30,7 +31,8 @@ class Card:
     def dict2card(data: dict) -> Card:
         keys = data.keys()
         cardname = data['name']
-        artist = data['artist'] if 'artist' in keys else 'Unknown'
-        cardSet = data['set_name']
+        artId = data['illustration_id']
+        artist = data['artist']
+        cardSet = data['set']
         imgs_uri = data['image_uris'] if 'image_uris' in keys else {}
-        return Card(cardname, artist, cardSet, imgs_uri)
+        return Card(cardname, artist, cardSet, artId, imgs_uri)

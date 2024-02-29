@@ -51,6 +51,32 @@ class UniqueArtistIterator(CardIterator):
         return currentCard
 
 
+class ArtIterator(CardIterator):
+    def __init__(self, cardList: List[Card], artId:str):
+        self._cardList = cardList
+        self._currentIx = 0
+        self._artId = artId
+
+    def __iter__(self) -> ArtIterator:
+        self._currentIx = 0
+        return self
+
+
+    def __next__(self) -> Card:
+        if self._currentIx >= len(self._cardList):
+            raise StopIteration
+
+        while self._cardList[self._currentIx].artId != self._artId:
+            self._currentIx += 1
+            if self._currentIx >= len(self._cardList):
+                raise StopIteration
+
+        currentCard = self._cardList[self._currentIx]
+        self._currentIx += 1
+        return currentCard
+
+
+
 class ArtistIterator(CardIterator):
     def __init__(self, cardList: List[Card], artist:str):
         self._cardList = cardList

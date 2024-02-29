@@ -75,7 +75,7 @@ class AppFrame(ctk.CTkFrame):
         return (self.cardGallery.getImage(selectedIx), self.cardGallery.getId(selectedIx))
 
 
-    def getClickedArtist(self) -> str:
+    def getClickedArt(self) -> str:
         return self.artGallery.getSelectedId()
 
 
