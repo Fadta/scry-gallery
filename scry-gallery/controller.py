@@ -84,8 +84,10 @@ class Controller:
             print(f"Couldn't find {cardName}, skipping")
             if len(self._cardNames) > 0:
                 self.runCard(self._cardNames.pop())
+                return
             else:
                 self._app.setStatus("Finished")
+                return
 
         self._loadArtGallery(self._cardVariations)
 
