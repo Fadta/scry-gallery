@@ -8,6 +8,8 @@ from carddb import CardDataBase
 
 
 class Controller:
+    GETTING_CARDNAME = ""
+    GETTING_ARTISTNAME = ""
     def __init__(self, app: AppFrame) -> None:
         self._app = app
         self._resourceManager = ResourceManager()
@@ -26,6 +28,7 @@ class Controller:
         artist = self._app.getClickedArtist()
         self._app.setStatus(f"Selected art by f{artist}")
         # load cards from artist
+        Controller.GETTING_ARTISTNAME = artist
         self._app.clearCard()
         self._loadCardGallery(self._cardVariations, artist)
 
@@ -49,11 +52,15 @@ class Controller:
 
 
     def _loadArtGallery(self, cards: List[Card]) -> None:
-        self._app.setStatus(f"Loading Arts for {cards[0].cardname}, this could take a while")
+        cardname = cards[0].cardname
+        self._app.setStatus(f"Loading Arts for {cardname}, this could take a while")
         self._app.update()
         for card in UniqueArtistIterator(cards):
+            if cardname != Controller.GETTING_CARDNAME:
+                break
             img = self._resourceManager.requestImage(card.getImgUri(ImageType.ART_CROP))
             self._app.addArt(img, card.artist)
+            self._app.update()
             self._resourceManager.dutySleep()
         self._app.setStatus(f"Loaded Arts for {cards[0].cardname}")
         self._app.update()
@@ -63,8 +70,11 @@ class Controller:
         self._app.setStatus(f"Loading {cards[0].cardname} by {artist}, this could take a while")
         self._app.update()
         for card in ArtistIterator(cards, artist):
+            if artist != Controller.GETTING_ARTISTNAME:
+                break
             img = self._resourceManager.requestImage(card.getImgUri(ImageType.PNG))
             self._app.addCard(img, card.getId())
+            self._app.update()
             self._resourceManager.dutySleep()
         self._app.setStatus(f"Loaded {cards[0].cardname} by {artist}")
         self._app.update()
@@ -89,6 +99,7 @@ class Controller:
                 self._app.setStatus("Finished")
                 return
 
+        Controller.GETTING_CARDNAME = cardName
         self._loadArtGallery(self._cardVariations)
 
 
