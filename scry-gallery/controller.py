@@ -26,6 +26,7 @@ class Controller:
         artist = self._app.getClickedArtist()
         self._app.setStatus(f"Selected art by f{artist}")
         # load cards from artist
+        self._app.clearCard()
         self._loadCardGallery(self._cardVariations, artist)
 
 
@@ -76,10 +77,11 @@ class Controller:
 
     def runCard(self, cardName: str) -> None:
         self._app.setStatus(f"{cardName} ({len(self._cardNames)} cards left)")
+        self._app.setCardName(cardName)
         self._app.update()
         self._cardVariations = self._cardDB.fetchCards(cardName)
         if len(self._cardVariations) == 0:
-            print(f"Couldn't found {cardName}, skipping")
+            print(f"Couldn't find {cardName}, skipping")
             if len(self._cardNames) > 0:
                 self.runCard(self._cardNames.pop())
             else:
