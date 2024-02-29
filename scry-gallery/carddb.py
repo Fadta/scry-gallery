@@ -7,7 +7,7 @@ class CardDataBase:
         self.lastFetch = []
 
         print("Loading Cards")
-        with open(dbPath) as cards:
+        with open(dbPath, encoding='utf-8-sig') as cards:
             self.cards = json.load(cards)
         print("Cards Loaded")
         
