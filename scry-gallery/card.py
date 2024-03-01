@@ -31,7 +31,7 @@ class Card:
     def dict2card(data: dict) -> Card:
         keys = data.keys()
         cardname = data['name']
-        artId = data['illustration_id']
+        artId = data['illustration_id'] if 'illustration_id' in keys else 'unknown'
         artist = data['artist']
         cardSet = data['set']
         imgs_uri = data['image_uris'] if 'image_uris' in keys else {}
