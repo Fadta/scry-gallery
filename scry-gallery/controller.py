@@ -26,7 +26,6 @@ class Controller:
     def _clickedArt(self) -> None:
         # get artist name
         artist = self._app.getClickedArt()
-        self._app.setStatus(f"Selected art by f{artist}")
         # load cards from artId
         Controller.GETTING_ARTID = artist
         self._app.clearCard()
@@ -71,12 +70,12 @@ class Controller:
         self._app.setStatus(f"Loading arts for {cardname}")
         self._app.update()
         for card in ArtIterator(cards, artId):
-            if artId != Controller.GETTING_ARTID:
+            if artId != Controller.GETTING_ARTID or cardname != Controller.GETTING_CARDNAME:
                 break
             img = self._resourceManager.requestImage(card.getImgUri(ImageType.PNG))
             self._app.addCard(img, card.getId())
             self._app.update()
-            self._resourceManager.dutySleep()
+            #self._resourceManager.dutySleep()
         self._app.setStatus(f"Loaded arts for {cardname}")
         self._app.update()
 

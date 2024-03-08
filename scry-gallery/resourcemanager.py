@@ -11,7 +11,7 @@ DATABASE_PATH = os.path.join(SCRIPT_DIRECTORY, 'scryfall.json')
 class ResourceManager:
     def __init__(self):
         self._outputFolder = os.path.join(SCRIPT_DIRECTORY, 'output')
-        self.API_CITIZENSHIP_DELAY = 0.1
+        self.API_CITIZENSHIP_DELAY = 0.06
 
 
     # TODO
